@@ -1,0 +1,10 @@
+class MysticAudio {
+  constructor(songs){this.songs=songs;this.enabled=true;this.song=0;this.index=0;this.started=0;this.ctx=null;this.voices=new Set();}
+  unlock(){if(!this.ctx){this.ctx=new AudioContext();this.master=this.ctx.createGain();this.master.gain.value=.14;this.master.connect(this.ctx.destination);}this.ctx.resume().catch(()=>{});}
+  play(song){this.stop();this.song=song%this.songs.length;this.index=0;if(this.ctx)this.started=this.ctx.currentTime+.1;}
+  stop(){for(const v of this.voices){try{v.stop();}catch{}}this.voices.clear();}
+  setEnabled(v){this.enabled=v;if(!v)this.stop();else this.play(this.song);}
+  tone(freq,duration=.12,type='triangle',volume=.25,when){if(!this.ctx||!this.enabled||this.voices.size>50)return;const c=this.ctx,t=Math.max(c.currentTime,when??c.currentTime),o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(volume,t+.012);g.gain.exponentialRampToValueAtTime(.001,t+Math.max(.025,duration));o.connect(g);g.connect(this.master);o.start(t);o.stop(t+duration+.03);this.voices.add(o);o.onended=()=>{this.voices.delete(o);o.disconnect();g.disconnect();};}
+  tick(){if(!this.enabled||!this.ctx||this.ctx.state!=='running')return;const notes=this.songs[this.song];if(!notes?.length)return;const now=this.ctx.currentTime;while(this.index<notes.length&&notes[this.index][0]+this.started<now+.15){const [t,d,k,v]=notes[this.index++];if(t+this.started>=now-.08)this.tone(440*2**((k-69)/12),Math.min(d,1.5),'triangle',v/127*.16,t+this.started);}if(this.index===notes.length&&now>this.started+notes.at(-1)[0]+3){this.index=0;this.started=now+.1;}}
+  effect(name){if(name==='jump')this.tone(620,.1,'sine',.3);if(name==='hit'){this.tone(120,.13,'sawtooth',.25);this.tone(260,.09,'triangle',.4);}if(name==='hurt')this.tone(85,.2,'square',.15);if(name==='coin'){this.tone(880,.12);this.tone(1320,.2,'sine',.3,this.ctx?.currentTime+.08);}if(name==='magic'){this.tone(330,.35,'sine',.4);this.tone(660,.5,'triangle',.2);} }
+}
