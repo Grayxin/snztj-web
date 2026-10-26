@@ -36,5 +36,17 @@
     const a=attr(level,Math.floor(x/16),Math.floor((y+(level.surfaceOffset||0))/16));
     return a===1||((a===2||a===3)&&y>=surfaceAt(level,x,y));
   }
-  const api={surfaceAt,moveBody,attr,blocksProjectile};if(typeof module!=='undefined')module.exports=api;else root.MysticPhysics=api;
+  // Original 0x401f1e scans type-8 material, ignoring one-way type-6 platforms.
+  // Masks from PE 0x480030; this query deliberately uses original map coordinates.
+  function nativeGroundAt(level,x){
+    if(x<0||x>=level.width*16)return 0;
+    const tx=Math.floor(x/16),lx=Math.floor(x)%16;
+    for(let y=0;y<480;y++){
+      const a=attr(level,tx,Math.floor(y/16)),shape=a&15,ly=y%16;
+      if((a>>>4)!==0)continue;
+      if(shape===1||(shape===2&&lx>=15-ly)||(shape===3&&lx<=ly))return y;
+    }
+    return 480;
+  }
+  const api={surfaceAt,moveBody,attr,blocksProjectile,nativeGroundAt};if(typeof module!=='undefined')module.exports=api;else root.MysticPhysics=api;
 })(globalThis);

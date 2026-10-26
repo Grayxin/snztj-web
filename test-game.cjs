@@ -2,11 +2,12 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const nodes=new Map(),drawn=[];
 function node(){return {textContent:'',hidden:false,disabled:false,dataset:{},classList:{add(){},remove(){},toggle(){}},addEventListener(){},setAttribute(){},querySelector(){return node();},focus(){},getContext(){return new Proxy({},{get:(_,key)=>key==='drawImage'?(im)=>drawn.push(im):()=>{}})}};}
 const document={querySelector(s){if(!nodes.has(s))nodes.set(s,node());return nodes.get(s)},querySelectorAll(){return []},addEventListener(){}};
-const box={console,document,Math,Set,Promise,Error,Number,String,localStorage:{getItem(){return null},setItem(){}},Image:class{set src(v){this.width=640;this.height=480;this.onload()}},requestAnimationFrame(){},addEventListener(){},MysticPhysics:require('./physics.js'),MysticEnemy:require('./enemy-ai.js'),MysticAudio:class{unlock(){}play(){}stop(){}tick(){}tone(){}effect(){}},};box.window=box;box.globalThis=box;vm.createContext(box);
+const box={console,document,Math,Set,Promise,Error,Number,String,localStorage:{getItem(){return null},setItem(){}},Image:class{set src(v){this.width=640;this.height=480;this.onload()}},requestAnimationFrame(){},addEventListener(){},MysticPhysics:require('./physics.js'),MysticEnemy:require('./enemy-ai.js'),MysticMage:require('./native-mage.js'),MysticCloud:require('./native-cloud.js'),MysticHazards:require('./native-hazards.js'),MysticAudio:class{unlock(){}play(){}stop(){}tick(){}tone(){}effect(){}},};box.window=box;box.globalThis=box;vm.createContext(box);
 vm.runInContext(fs.readFileSync(__dirname+'/assets/data.js','utf8'),box);
 for(const file of ['native-atlas.js','encounters.js'])vm.runInContext(fs.readFileSync(__dirname+'/assets/'+file,'utf8'),box);
-let game=fs.readFileSync(__dirname+'/game.js','utf8');game=game.replace(/\}\)\(\);\s*$/,"window.TEST={images,drawPlayer,drawEnemy,setupStage,start,update,pause,resume,attack,magic,get:()=>({player,enemies,projectiles,mode,stage,level,keys,pressed,score}),setMode:v=>mode=v};})();");vm.runInContext(game,box);
+let game=fs.readFileSync(__dirname+'/game.js','utf8');game=game.replace(/\}\)\(\);\s*$/,"window.TEST={images,draw,drawPlayer,drawEnemy,setupStage,start,update,pause,resume,attack,magic,get:()=>({player,enemies,projectiles,mode,stage,level,keys,pressed,score,transition}),setMode:v=>mode=v};})();");vm.runInContext(game,box);
 const t=box.TEST;
+for(const [name,size] of Object.entries(box.GAME_DATA.images))t.images[name]={width:size[0],height:size[1],name};
 t.setMode('ready');t.start();let s=t.get();assert.equal(s.mode,'playing');assert.equal(s.stage,0);s.enemies.forEach(e=>e.x=10000);
 for(let i=0;i<90;i++)t.update(1/120);s=t.get();assert(s.player.ground,'spawn settles onto original map');
 const before=s.player.x;s.keys.add('ArrowRight');for(let i=0;i<90;i++)t.update(1/120);s.keys.clear();assert(t.get().player.x>before+100,'movement advances');
@@ -16,8 +17,18 @@ const mana=s.player.mana;t.magic();assert(e.dead,'magic defeats enemy');assert(s
 t.pause();const x=s.player.x;t.update(.2);assert.equal(t.get().player.x,x,'pause freezes physics');t.resume();assert.equal(t.get().mode,'playing');
 for(let stage=0;stage<16;stage++){
  t.setupStage(stage);t.setMode('playing');s=t.get();assert.equal(s.level.tiles.length,s.level.width*30);assert.equal(s.level.attrs.length,s.level.width*30);
- s.enemies.forEach(e=>e.dead=true);s.player.x=s.level.width*16-50;t.update(.01);assert.equal(t.get().mode,'clear','exit completes scene '+stage);
- if(stage<15){t.start();assert.equal(t.get().stage,stage+1,'next scene starts');}
+ s.enemies.forEach(e=>e.dead=true);s.player.x=s.level.width*16-50;t.update(.01);
+ if([5,10,15].includes(stage)){
+  assert.equal(t.get().mode,'clear','major stage shows settlement');
+  if(stage<15){t.start();assert.equal(t.get().stage,stage+1);}
+ }else{
+  assert.equal(t.get().mode,'transition','small stages pan directly without modal');
+  assert.equal(nodes.get('#overlay').hidden,true);
+  t.draw();t.update(.52);t.draw(); // Both source and destination scenes render during the pan.
+  const elapsed=t.get().transition.elapsed;t.pause();t.update(.4);assert.equal(t.get().transition.elapsed,elapsed,'pan pauses on focus loss');t.resume();
+  for(let i=0;i<180;i++)t.update(1/120);
+  assert.equal(t.get().stage,stage+1);assert.equal(t.get().mode,'playing');assert.equal(t.get().transition,null);
+ }
 }
 t.setMode('ready');t.start();s=t.get();s.player.hp=1;s.player.invincible=0;s.player.y=600;t.update(.01);assert.equal(t.get().mode,'dead','fatal fall opens restart');
 t.start();assert.equal(t.get().player.hp,8,'restart restores health');
@@ -58,7 +69,7 @@ t.pause();let timer=s.enemies[0].timer;t.update(.5);assert.equal(s.enemies[0].ti
 console.log('native encounters: 16 exact rosters, wolf/rematch, giant pair+specials, final mage; enemy damage and pause integration passed');
 
 t.setupStage(15);t.setMode('playing');s=t.get();Object.assign(s.player,{x:200,y:445,vx:0,vy:0,invincible:0});Object.assign(s.enemies[0],{x:290,y:375,hoverY:375});
-let sawProjectile=false;for(let i=0;i<480;i++){t.update(1/120);sawProjectile ||= t.get().projectiles.length>0;}
+let sawProjectile=false;for(let i=0;i<600;i++){t.update(1/120);sawProjectile ||= t.get().projectiles.length>0;}
 assert(sawProjectile,'final mage creates live projectile entities');assert(s.player.hp<8,'mage projectiles actually damage player');
 for(const [name,size] of Object.entries(box.GAME_DATA.images))t.images[name]={width:size[0],height:size[1],name};
 for(let stage=0;stage<16;stage++){t.setupStage(stage);s=t.get();for(const e of s.enemies)for(const state of ['patrol','windup','strike','recovery'])for(const face of [-1,1]){Object.assign(e,{state,face,phase:.1});t.drawEnemy(e);}}

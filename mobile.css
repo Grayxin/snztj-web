@@ -1,0 +1,31 @@
+/* Compact landscape shell. Side rails keep controls outside the original scene. */
+.mobile-game,.mobile-game body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:#050d10}
+.mobile-game #play-shell{position:fixed;left:var(--view-x,50vw);top:var(--view-y,50vh);width:var(--play-width,100vw);height:var(--play-height,100dvh);transform:translate(-50%,-50%);background:#050d10;overflow:hidden;isolation:isolate;user-select:none;-webkit-user-select:none}
+.mobile-game #play-shell.rotated{transform:translate(-50%,-50%) rotate(90deg)}
+.mobile-game .topbar{position:absolute;z-index:5;right:max(8px,env(safe-area-inset-right));top:max(6px,env(safe-area-inset-top));height:auto;padding:0;border:0;width:var(--play-rail);display:flex;justify-content:center}
+.mobile-game .brand,.mobile-game .local-tag,.mobile-game .heading,.mobile-game .sidebar,.mobile-game .page-footer,.mobile-game .game-footer{display:none}
+.mobile-game .top-actions{display:flex;flex-direction:column;gap:6px}
+.mobile-game .top-actions button{font-size:10px;padding:7px 5px;min-width:58px;background:#142522;border-color:#3b5149}
+.mobile-game main{display:block;position:absolute;left:0;top:0;right:auto;bottom:auto;width:var(--play-width,100%);height:var(--play-height,100%);max-width:none;padding:0;margin:0}
+.mobile-game .arcade{position:absolute;left:0;top:0;right:auto;bottom:auto;width:var(--play-width,100%);height:var(--play-height,100%);min-height:0;align-self:auto;display:block;border:0;border-radius:0;box-shadow:none;background:#050d10;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.mobile-game .rotated .arcade{padding:env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left) env(safe-area-inset-top)}
+.mobile-game .screen{position:absolute;left:var(--play-canvas-left,10%);top:var(--play-canvas-top,0px);width:var(--play-canvas-width,80%);height:var(--play-canvas-height,100%);max-height:none;aspect-ratio:auto;overflow:hidden}
+.mobile-game .game-meta{position:absolute;z-index:4;left:max(8px,env(safe-area-inset-left));top:max(6px,env(safe-area-inset-top));padding:0;height:auto;display:block;width:var(--play-rail);text-align:center}
+.mobile-game .game-meta>span{display:none}
+.mobile-game .game-meta button{font-size:11px;padding:10px 5px;min-width:58px;background:#142522;border:1px solid #3b5149;border-radius:7px}
+.mobile-game .touch-controls{position:absolute;left:0;top:0;right:auto;bottom:auto;width:var(--play-width,100%);height:var(--play-height,100%);z-index:3;display:flex;align-items:flex-end;justify-content:space-between;background:none;padding:0 max(8px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));pointer-events:none}
+.mobile-game .dpad,.mobile-game .action-pad{width:calc(var(--play-rail) - 16px);display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:auto}
+.mobile-game .touch-controls button{width:clamp(44px,calc(var(--play-rail) - 20px),64px);height:clamp(44px,calc(var(--play-height) * .16),62px);font-size:14px;border-radius:12px;background:#20342fe8;box-shadow:0 3px 0 #020b09;touch-action:none;-webkit-touch-callout:none}
+.mobile-game .touch-controls button:active{background:#45634b;transform:translateY(2px)}
+.mobile-game .overlay-inner{width:94%;max-width:94%}
+.mobile-game .title-logo{width:24%;max-height:70px;object-fit:contain;margin:0}
+.mobile-game .overlay .eyebrow,.mobile-game .edition,.mobile-game .start-hint{display:none}
+.mobile-game .overlay h2{font-size:22px;margin:6px 0;letter-spacing:5px}
+.mobile-game .overlay p{font-size:11px;line-height:1.5;margin:4px 0 10px}
+.mobile-game .stage-choice{font-size:11px;margin-bottom:8px}
+.mobile-game .stage-choice select{padding:5px;max-width:180px}
+.mobile-game .primary{font-size:12px;padding:10px 16px;min-width:160px}
+.mobile-game #toast{top:54px;max-width:95%;white-space:normal;text-align:center;font-size:10px;padding:7px}
+/* The root enters fullscreen; its child shell retains rotation and touch controls. */
+html.mobile-game:fullscreen{background:#050d10;overflow:hidden}
+@media(max-height:330px){.mobile-game .title-logo{display:none}.mobile-game .overlay p{margin:2px 0 6px}}

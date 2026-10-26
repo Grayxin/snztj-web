@@ -19,15 +19,13 @@ function create(type,x,y,stage=0,boss=false,variant=1){const d={...defs[type]};
  return {...d,type,x,y,vx:0,vy:0,ground:false,home:x,hoverY:y,face:-1,maxHp:d.hp,hp:d.hp,variant,boss,state:'patrol',timer:0,phase:0,cycle:0,hit:0,dead:false,didHit:false,attack:0};}
 function begin(e,state,duration){e.state=state;e.timer=duration;e.phase=0;}
 function step(e,w,dt){
- const p=w.player,d=e;e.vx=0;if(e.dead)return;e.hit=Math.max(0,e.hit-dt);e.phase+=dt;
+ const p=w.player,d=e;e.vx=0;if(e.dead||e.type==='cloud'||e.type==='mage')return;e.hit=Math.max(0,e.hit-dt);e.phase+=dt;
  if(e.hit>0&&!e.boss){begin(e,'recovery',.35);return;}
  const dx=p.x-e.x,dy=Math.abs((p.y-p.h/2)-(e.y-e.h/2));e.rage=e.boss&&e.hp<=e.maxHp/2;const rate=e.rage?1.25:1;
  if(e.state==='windup'){
   e.timer-=dt*rate;
   if(e.timer<=0){begin(e,'strike',d.active);e.didHit=false;e.cycle++;
-   if(e.type==='mage')w.shoot(e,e.boss&&e.rage?'fan':'orb');
-   if(e.type==='cloud')w.shoot(e,'orb');
-   if(e.type==='golem'&&e.variant>=2&&e.cycle%2===0)w.shoot(e,e.variant===3?'fan':'orb');
+
   }
  }else if(e.state==='strike'){
   if(e.type==='dog'||e.type==='werewolf')e.vx=e.face*(e.type==='dog'?280:340);

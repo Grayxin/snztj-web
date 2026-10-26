@@ -47,6 +47,21 @@
       "layout": "xyxy",
       "frames": 41
     },
+    "wiz_maru": {
+      "address": "0x4954b0",
+      "layout": "xyxy",
+      "frames": 21
+    },
+    "effect1": {
+      "address": "0x49a008",
+      "layout": "xyxy",
+      "frames": 127
+    },
+    "effect2": {
+      "address": "0x49ac38",
+      "layout": "xyxy",
+      "frames": 80
+    },
     "kumo": {
       "address": "0x4cfd40",
       "layout": "xyxy",

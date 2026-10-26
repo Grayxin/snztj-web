@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');const H=require('./native-hazards.js');
+let hits=0;const w={groundAt:()=>400,player:{x:200,y:390,w:24,h:48},hurt(){hits++;},terrain:()=>false};
+let list=H.create({kind:'lightning',x:200,vx:0},w);assert.equal(list[0].y,-80);
+H.step(list,w,1/60);assert.equal(hits,0,'lightning initial animation has no attack');H.step(list,w,1/60);assert.equal(hits,1,'original lightning second animation entry attacks');
+for(let i=0;i<7;i++)H.step(list,w,1/60);assert(list.every(h=>h.dead),'native lightning lives eight ticks');
+list=H.create({kind:'special4252c6',x:300,y:100},w);assert.equal(list.length,6);assert.deepEqual(list.map(h=>[h.x,h.y]),[[-148,92],[-148,108],[-148,124],[332,92],[332,108],[332,124]]);
+assert(list.every(h=>h.w===448&&h.h===16),'original horizontal helpers are 448x16');
+list=H.create({kind:'acceleratingBolt',x:0,y:0,angle:0,speed:1.5,acceleration:.2},w);H.step(list,w,1/60);const angle=list[0].angle;w.player.y=-200;H.step(list,w,1/60);assert.equal(list[0].angle,angle,'accelerating stream never homes');assert(list[0].speed>1.5);
+list=H.create({kind:'homingBolt',x:0,y:0,angle:0},w);const old=list[0].angle;for(let i=0;i<35;i++)H.step(list,w,1/60);assert.notEqual(list[0].angle,old,'native homing helper turns');assert(list[0].speed<=8);
+console.log('native hazards: lightning timing/column, six beam geometry, straight acceleration and age-dependent homing passed');

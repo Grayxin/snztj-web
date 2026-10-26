@@ -8,10 +8,10 @@ e=enemy();w=world();AI.step(e,w,.01);assert.equal(e.state,'windup');AI.resolve(e
 for(let i=0;i<70;i++){AI.step(e,w,1/120);AI.resolve(e,w);}assert.equal(w.damage,1,'one hit per strike');
 e=enemy();w=world();AI.step(e,w,.01);player.x=80;for(let i=0;i<70;i++){AI.step(e,w,1/120);AI.resolve(e,w);}assert.equal(w.damage,0,'moving out of range evades attack');player.x=200;
 e=enemy();w=world();e.hit=.5;for(let i=0;i<30;i++){AI.step(e,w,1/120);AI.resolve(e,w);}assert.equal(w.damage,0,'stunned enemies cannot attack');
-e=enemy('mage',450);w=world();for(let i=0;i<140;i++)AI.step(e,w,1/120);assert(w.shots.length>0,'mage launches projectiles');
-for(let stage=0;stage<3;stage++){e=AI.create('golem',250,400,stage,true,stage+1);w=world();for(let i=0;i<800;i++)AI.step(e,w,1/120);assert(e.boss);assert.equal(e.variant,stage+1);if(stage>0)assert(w.shots.some(p=>p==='orb'||p==='fan'),'later bosses use ranged patterns');}
+e=enemy('mage',450);w=world();for(let i=0;i<140;i++)AI.step(e,w,1/120);assert.equal(w.shots.length,0,'generic AI must not invent wizard attacks');
+for(let stage=0;stage<3;stage++){e=AI.create('golem',250,400,stage,true,stage+1);w=world();for(let i=0;i<800;i++)AI.step(e,w,1/120);assert(e.boss);assert.equal(e.variant,stage+1);assert.equal(w.shots.length,0,'stone monsters must not cast invented orb/fan spells');}
 e=enemy();e.dead=true;w=world();for(let i=0;i<180;i++){AI.step(e,w,1/120);AI.resolve(e,w);}assert.equal(w.damage,0);assert.equal(w.shots.length,0);
-console.log('enemy AI: approach/strike, windup safety, single-hit, evasion, stun/death, mage projectiles and distinct bosses passed');
+console.log('enemy AI: approach/strike, windup safety, single-hit, evasion, stun/death; no fabricated mage/cloud/stone shots passed');
 
 
 e=enemy();w=world();e.state='strike';e.timer=.2;e.face=1;AI.resolve(e,w);assert.equal(w.damage,0,'melee cannot hit behind');e.face=-1;player.y=250;AI.resolve(e,w);assert.equal(w.damage,0,'melee cannot hit another elevation');player.y=400;

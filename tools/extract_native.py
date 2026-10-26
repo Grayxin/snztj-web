@@ -9,11 +9,11 @@ def offset(va):
   _,size,start,length,raw=struct.unpack_from('<8sIIII',b,ss+i*40)
   if start<=rva<start+length:return raw+rva-start
  raise ValueError(hex(va))
-spec={'gor1l':(0x4cd160,True),'gor1r':(0x4cd520,True),'gor2l':(0x4cd900,True),'gor2r':(0x4cdcc0,True),'gor3l':(0x4ce0a0,True),'gor3r':(0x4ce460,True),'wolf_l':(0x490cc0,False),'wolf_r':(0x491440,False),'wiz':(0x4950c0,True),'kumo':(0x4cfd40,True)}
+spec={'gor1l':(0x4cd160,True),'gor1r':(0x4cd520,True),'gor2l':(0x4cd900,True),'gor2r':(0x4cdcc0,True),'gor3l':(0x4ce0a0,True),'gor3r':(0x4ce460,True),'wolf_l':(0x490cc0,False),'wolf_r':(0x491440,False),'wiz':(0x4950c0,True),'wiz_maru':(0x4954b0,True),'effect1':(0x49a008,True),'effect2':(0x49ac38,True),'kumo':(0x4cfd40,True)}
 manifest=json.loads((ROOT/'web/assets/manifest.json').read_text());atlas={};evidence={}
 for name,(va,corners) in spec.items():
  frames=[];w,h=manifest[name]
- for i in range(100):
+ for i in range(256):
   r=list(struct.unpack_from('<6i',b,offset(va)+i*24))
   if r[1]==0 and r[3]==0:break
   x,y,c,d,ox,oy=r;fw=c-x if corners else c;fh=d-y if corners else d
