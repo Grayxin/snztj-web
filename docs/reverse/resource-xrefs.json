@@ -1,0 +1,207 @@
+[
+  {
+    "addr": "0x404d34",
+    "asm": "push 0x491c80",
+    "resource": "wolf_l.cnx"
+  },
+  {
+    "addr": "0x404d4a",
+    "asm": "push 0x491c8c",
+    "resource": "wolf_r.cnx"
+  },
+  {
+    "addr": "0x409487",
+    "asm": "push 0x495870",
+    "resource": "wiz.cnx"
+  },
+  {
+    "addr": "0x40949d",
+    "asm": "push 0x495878",
+    "resource": "wiz_maru.cnx"
+  },
+  {
+    "addr": "0x420a6c",
+    "asm": "push 0x49b540",
+    "resource": "effect1.cnx"
+  },
+  {
+    "addr": "0x420b73",
+    "asm": "push 0x49b54c",
+    "resource": "effect2.cnx"
+  },
+  {
+    "addr": "0x426ec5",
+    "asm": "push 0x49b858",
+    "resource": "over.cnx"
+  },
+  {
+    "addr": "0x427301",
+    "asm": "push 0x49b864",
+    "resource": "roll.cnx"
+  },
+  {
+    "addr": "0x427325",
+    "asm": "push 0x49b870",
+    "resource": "End01.cnx"
+  },
+  {
+    "addr": "0x427346",
+    "asm": "push 0x49b87c",
+    "resource": "End02.cnx"
+  },
+  {
+    "addr": "0x42737a",
+    "asm": "push 0x49b888",
+    "resource": "end03.cnx"
+  },
+  {
+    "addr": "0x4273ae",
+    "asm": "push 0x49b894",
+    "resource": "end04.cnx"
+  },
+  {
+    "addr": "0x428a5e",
+    "asm": "push 0x4a4b60",
+    "resource": "gob1.cnx"
+  },
+  {
+    "addr": "0x428b2e",
+    "asm": "push 0x4a4b6c",
+    "resource": "gob2.cnx"
+  },
+  {
+    "addr": "0x428bfe",
+    "asm": "push 0x4a4b78",
+    "resource": "gob3.cnx"
+  },
+  {
+    "addr": "0x4332cf",
+    "asm": "push 0x4a9e28",
+    "resource": "dog1.cnx"
+  },
+  {
+    "addr": "0x4333e0",
+    "asm": "push 0x4a9e34",
+    "resource": "dog2.cnx"
+  },
+  {
+    "addr": "0x43ac6f",
+    "asm": "push 0x4b26b8",
+    "resource": "bone1.cnx"
+  },
+  {
+    "addr": "0x43ad80",
+    "asm": "push 0x4b26c4",
+    "resource": "bone3.cnx"
+  },
+  {
+    "addr": "0x43ae91",
+    "asm": "push 0x4b26d0",
+    "resource": "bone2.cnx"
+  },
+  {
+    "addr": "0x446da7",
+    "asm": "push 0x4ce8a0",
+    "resource": "gor1l.cnx"
+  },
+  {
+    "addr": "0x446dbd",
+    "asm": "push 0x4ce8ac",
+    "resource": "gor1r.cnx"
+  },
+  {
+    "addr": "0x446f85",
+    "asm": "push 0x4ce8b8",
+    "resource": "gor2l.cnx"
+  },
+  {
+    "addr": "0x446f9b",
+    "asm": "push 0x4ce8c4",
+    "resource": "gor2r.cnx"
+  },
+  {
+    "addr": "0x447163",
+    "asm": "push 0x4ce8d0",
+    "resource": "gor3l.cnx"
+  },
+  {
+    "addr": "0x447179",
+    "asm": "push 0x4ce8dc",
+    "resource": "gor3r.cnx"
+  },
+  {
+    "addr": "0x4550cf",
+    "asm": "push 0x4d0080",
+    "resource": "kumo.cnx"
+  },
+  {
+    "addr": "0x458719",
+    "asm": "push 0x4d0970",
+    "resource": "sysfont.cnx"
+  },
+  {
+    "addr": "0x458732",
+    "asm": "push 0x4d097c",
+    "resource": "credit.cnx"
+  },
+  {
+    "addr": "0x45874a",
+    "asm": "push 0x4d0988",
+    "resource": "del.cnx"
+  },
+  {
+    "addr": "0x45f789",
+    "asm": "push 0x4dcc50",
+    "resource": "thany_a1.cnx"
+  },
+  {
+    "addr": "0x45f79f",
+    "asm": "push 0x4dcc60",
+    "resource": "thany_a2.cnx"
+  },
+  {
+    "addr": "0x46d8b8",
+    "asm": "push 0x4dd9f8",
+    "resource": "stgb%02d.cnx"
+  },
+  {
+    "addr": "0x46d8e5",
+    "asm": "push 0x4dda08",
+    "resource": "stgp%02d.cnx"
+  },
+  {
+    "addr": "0x46dc27",
+    "asm": "push 0x4dda40",
+    "resource": "font_1.cnx"
+  },
+  {
+    "addr": "0x46dc4c",
+    "asm": "push 0x4dda4c",
+    "resource": "gage.cnx"
+  },
+  {
+    "addr": "0x46dc62",
+    "asm": "push 0x4dda58",
+    "resource": "gage.cnx"
+  },
+  {
+    "addr": "0x47277f",
+    "asm": "push 0x4de14c",
+    "resource": "rogo1.cnx"
+  },
+  {
+    "addr": "0x47279d",
+    "asm": "push 0x4de158",
+    "resource": "rogo2.cnx"
+  },
+  {
+    "addr": "0x472885",
+    "asm": "push 0x4de164",
+    "resource": "ttlmenu.cnx"
+  },
+  {
+    "addr": "0x4728b9",
+    "asm": "push 0x4de170",
+    "resource": "rogwall.cnx"
+  }
+]

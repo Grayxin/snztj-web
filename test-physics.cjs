@@ -16,3 +16,11 @@ b={x:88,y:220,vx:0,vy:100,w:20,h:40,ground:false};moveBody(b,raised,.2);assert.e
 for(let i=0;i<2400;i++){b.vy+=1180/120;moveBody(b,raised,1/120);assert.equal(b.y,233,'standing must not sink across repeated updates');}
 b={x:88,y:260,vx:0,vy:-200,w:20,h:40,ground:false};moveBody(b,raised,.2);assert.equal(b.y,220,'offset platform still permits jumping through');
 console.log('terrain alignment: 7px inset and 20s stable platform support passed');
+const {blocksProjectile}=require('./physics.js');
+assert.equal(blocksProjectile(level,56,325),true);
+assert.equal(blocksProjectile(level,65,321),false,'above ascending slope stays open');
+assert.equal(blocksProjectile(level,65,335),true,'inside ascending slope blocks shots');
+assert.equal(blocksProjectile(level,97,320),false,'above descending slope stays open');
+assert.equal(blocksProjectile(level,97,330),true,'inside descending slope blocks shots');
+assert.equal(blocksProjectile(level,88,245),false,'one-way platform does not block shots');
+console.log('projectile solid/slope terrain collision passed');

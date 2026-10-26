@@ -32,5 +32,9 @@
     }
     b.y=target;
   }
-  const api={surfaceAt,moveBody,attr};if(typeof module!=='undefined')module.exports=api;else root.MysticPhysics=api;
+  function blocksProjectile(level,x,y){
+    const a=attr(level,Math.floor(x/16),Math.floor((y+(level.surfaceOffset||0))/16));
+    return a===1||((a===2||a===3)&&y>=surfaceAt(level,x,y));
+  }
+  const api={surfaceAt,moveBody,attr,blocksProjectile};if(typeof module!=='undefined')module.exports=api;else root.MysticPhysics=api;
 })(globalThis);

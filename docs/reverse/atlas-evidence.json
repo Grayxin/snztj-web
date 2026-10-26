@@ -1,0 +1,56 @@
+{
+  "source_sha256": "9813a73c418d76499ca1eff6d676884e7d5f127cee821dd4a95e03fffb75fa4f",
+  "tool": "Python struct PE reader (not REA)",
+  "tables": {
+    "gor1l": {
+      "address": "0x4cd160",
+      "layout": "xyxy",
+      "frames": 29
+    },
+    "gor1r": {
+      "address": "0x4cd520",
+      "layout": "xyxy",
+      "frames": 29
+    },
+    "gor2l": {
+      "address": "0x4cd900",
+      "layout": "xyxy",
+      "frames": 32
+    },
+    "gor2r": {
+      "address": "0x4cdcc0",
+      "layout": "xyxy",
+      "frames": 32
+    },
+    "gor3l": {
+      "address": "0x4ce0a0",
+      "layout": "xyxy",
+      "frames": 37
+    },
+    "gor3r": {
+      "address": "0x4ce460",
+      "layout": "xyxy",
+      "frames": 37
+    },
+    "wolf_l": {
+      "address": "0x490cc0",
+      "layout": "xywh",
+      "frames": 35
+    },
+    "wolf_r": {
+      "address": "0x491440",
+      "layout": "xywh",
+      "frames": 35
+    },
+    "wiz": {
+      "address": "0x4950c0",
+      "layout": "xyxy",
+      "frames": 41
+    },
+    "kumo": {
+      "address": "0x4cfd40",
+      "layout": "xyxy",
+      "frames": 25
+    }
+  }
+}
